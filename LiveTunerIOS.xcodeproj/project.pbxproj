@@ -1,0 +1,571 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		7EDBD9A52D63D1AB00DBB32E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7EDBD98C2D63D1A800DBB32E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7EDBD9932D63D1A800DBB32E;
+			remoteInfo = LiveTunerIOS;
+		};
+		7EDBD9AF2D63D1AB00DBB32E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7EDBD98C2D63D1A800DBB32E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7EDBD9932D63D1A800DBB32E;
+			remoteInfo = LiveTunerIOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7EDBD9942D63D1A800DBB32E /* LiveTunerIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveTunerIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EDBD9A42D63D1AB00DBB32E /* LiveTunerIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveTunerIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EDBD9AE2D63D1AB00DBB32E /* LiveTunerIOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveTunerIOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		7EDBD9962D63D1A800DBB32E /* LiveTunerIOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LiveTunerIOS;
+			sourceTree = "<group>";
+		};
+		7EDBD9A72D63D1AB00DBB32E /* LiveTunerIOSTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LiveTunerIOSTests;
+			sourceTree = "<group>";
+		};
+		7EDBD9B12D63D1AB00DBB32E /* LiveTunerIOSUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LiveTunerIOSUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7EDBD9912D63D1A800DBB32E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7EDBD9A12D63D1AB00DBB32E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7EDBD9AB2D63D1AB00DBB32E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7EDBD98B2D63D1A800DBB32E = {
+			isa = PBXGroup;
+			children = (
+				7EDBD9962D63D1A800DBB32E /* LiveTunerIOS */,
+				7EDBD9A72D63D1AB00DBB32E /* LiveTunerIOSTests */,
+				7EDBD9B12D63D1AB00DBB32E /* LiveTunerIOSUITests */,
+				7EDBD9952D63D1A800DBB32E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7EDBD9952D63D1A800DBB32E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7EDBD9942D63D1A800DBB32E /* LiveTunerIOS.app */,
+				7EDBD9A42D63D1AB00DBB32E /* LiveTunerIOSTests.xctest */,
+				7EDBD9AE2D63D1AB00DBB32E /* LiveTunerIOSUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7EDBD9932D63D1A800DBB32E /* LiveTunerIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7EDBD9B82D63D1AB00DBB32E /* Build configuration list for PBXNativeTarget "LiveTunerIOS" */;
+			buildPhases = (
+				7EDBD9902D63D1A800DBB32E /* Sources */,
+				7EDBD9912D63D1A800DBB32E /* Frameworks */,
+				7EDBD9922D63D1A800DBB32E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7EDBD9962D63D1A800DBB32E /* LiveTunerIOS */,
+			);
+			name = LiveTunerIOS;
+			packageProductDependencies = (
+			);
+			productName = LiveTunerIOS;
+			productReference = 7EDBD9942D63D1A800DBB32E /* LiveTunerIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7EDBD9A32D63D1AB00DBB32E /* LiveTunerIOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7EDBD9BB2D63D1AB00DBB32E /* Build configuration list for PBXNativeTarget "LiveTunerIOSTests" */;
+			buildPhases = (
+				7EDBD9A02D63D1AB00DBB32E /* Sources */,
+				7EDBD9A12D63D1AB00DBB32E /* Frameworks */,
+				7EDBD9A22D63D1AB00DBB32E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7EDBD9A62D63D1AB00DBB32E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7EDBD9A72D63D1AB00DBB32E /* LiveTunerIOSTests */,
+			);
+			name = LiveTunerIOSTests;
+			packageProductDependencies = (
+			);
+			productName = LiveTunerIOSTests;
+			productReference = 7EDBD9A42D63D1AB00DBB32E /* LiveTunerIOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7EDBD9AD2D63D1AB00DBB32E /* LiveTunerIOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7EDBD9BE2D63D1AB00DBB32E /* Build configuration list for PBXNativeTarget "LiveTunerIOSUITests" */;
+			buildPhases = (
+				7EDBD9AA2D63D1AB00DBB32E /* Sources */,
+				7EDBD9AB2D63D1AB00DBB32E /* Frameworks */,
+				7EDBD9AC2D63D1AB00DBB32E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7EDBD9B02D63D1AB00DBB32E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7EDBD9B12D63D1AB00DBB32E /* LiveTunerIOSUITests */,
+			);
+			name = LiveTunerIOSUITests;
+			packageProductDependencies = (
+			);
+			productName = LiveTunerIOSUITests;
+			productReference = 7EDBD9AE2D63D1AB00DBB32E /* LiveTunerIOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7EDBD98C2D63D1A800DBB32E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					7EDBD9932D63D1A800DBB32E = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					7EDBD9A32D63D1AB00DBB32E = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 7EDBD9932D63D1A800DBB32E;
+					};
+					7EDBD9AD2D63D1AB00DBB32E = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 7EDBD9932D63D1A800DBB32E;
+					};
+				};
+			};
+			buildConfigurationList = 7EDBD98F2D63D1A800DBB32E /* Build configuration list for PBXProject "LiveTunerIOS" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7EDBD98B2D63D1A800DBB32E;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7EDBD9C12D63D30600DBB32E /* XCRemoteSwiftPackageReference "AudioKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 7EDBD9952D63D1A800DBB32E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7EDBD9932D63D1A800DBB32E /* LiveTunerIOS */,
+				7EDBD9A32D63D1AB00DBB32E /* LiveTunerIOSTests */,
+				7EDBD9AD2D63D1AB00DBB32E /* LiveTunerIOSUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7EDBD9922D63D1A800DBB32E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7EDBD9A22D63D1AB00DBB32E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7EDBD9AC2D63D1AB00DBB32E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7EDBD9902D63D1A800DBB32E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7EDBD9A02D63D1AB00DBB32E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7EDBD9AA2D63D1AB00DBB32E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7EDBD9A62D63D1AB00DBB32E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7EDBD9932D63D1A800DBB32E /* LiveTunerIOS */;
+			targetProxy = 7EDBD9A52D63D1AB00DBB32E /* PBXContainerItemProxy */;
+		};
+		7EDBD9B02D63D1AB00DBB32E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7EDBD9932D63D1A800DBB32E /* LiveTunerIOS */;
+			targetProxy = 7EDBD9AF2D63D1AB00DBB32E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7EDBD9B62D63D1AB00DBB32E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7EDBD9B72D63D1AB00DBB32E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7EDBD9B92D63D1AB00DBB32E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LiveTunerIOS/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ghawkes.LiveTunerIOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7EDBD9BA2D63D1AB00DBB32E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LiveTunerIOS/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ghawkes.LiveTunerIOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7EDBD9BC2D63D1AB00DBB32E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ghawkes.LiveTunerIOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiveTunerIOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LiveTunerIOS";
+			};
+			name = Debug;
+		};
+		7EDBD9BD2D63D1AB00DBB32E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ghawkes.LiveTunerIOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiveTunerIOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LiveTunerIOS";
+			};
+			name = Release;
+		};
+		7EDBD9BF2D63D1AB00DBB32E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ghawkes.LiveTunerIOSUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LiveTunerIOS;
+			};
+			name = Debug;
+		};
+		7EDBD9C02D63D1AB00DBB32E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ghawkes.LiveTunerIOSUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LiveTunerIOS;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7EDBD98F2D63D1A800DBB32E /* Build configuration list for PBXProject "LiveTunerIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EDBD9B62D63D1AB00DBB32E /* Debug */,
+				7EDBD9B72D63D1AB00DBB32E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7EDBD9B82D63D1AB00DBB32E /* Build configuration list for PBXNativeTarget "LiveTunerIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EDBD9B92D63D1AB00DBB32E /* Debug */,
+				7EDBD9BA2D63D1AB00DBB32E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7EDBD9BB2D63D1AB00DBB32E /* Build configuration list for PBXNativeTarget "LiveTunerIOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EDBD9BC2D63D1AB00DBB32E /* Debug */,
+				7EDBD9BD2D63D1AB00DBB32E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7EDBD9BE2D63D1AB00DBB32E /* Build configuration list for PBXNativeTarget "LiveTunerIOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EDBD9BF2D63D1AB00DBB32E /* Debug */,
+				7EDBD9C02D63D1AB00DBB32E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7EDBD9C12D63D30600DBB32E /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+	};
+	rootObject = 7EDBD98C2D63D1A800DBB32E /* Project object */;
+}
