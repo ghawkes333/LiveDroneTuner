@@ -3,6 +3,9 @@
 # dependencies
 node_modules/
 
+# For temporary mac laptop
+install.sh
+
 # Expo
 .expo/
 dist/

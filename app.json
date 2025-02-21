@@ -10,9 +10,13 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
+<<<<<<< Updated upstream
       "infoPlist": {
         "NSMicrophoneUsageDescription": "This app uses the microphone to detect pitches"
       }
+=======
+      "bundleIdentifier": "com.anonymous.live-tuner"
+>>>>>>> Stashed changes
     },
     "android": {
       "adaptiveIcon": {
