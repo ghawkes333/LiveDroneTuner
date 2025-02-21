@@ -39,6 +39,8 @@ class ViewController: UIViewController {
             do {
                 try AVAudioSession.sharedInstance().setMode(.default)
                 try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+                
+                // This line ensures that the audio plays even when the phone is on "silent"
                 try AVAudioSession.sharedInstance().setCategory(.playback)
                 guard let urlString = urlString else {
                     print("Mmmm urlString isn't define")
@@ -53,6 +55,9 @@ class ViewController: UIViewController {
                     print("Player isn't defined")
                     return
                 }
+                
+                // Loop indefinitely
+                player.numberOfLoops = -1
                 print("player success")
                 player.play()
                 print("playing")
