@@ -6,16 +6,39 @@
 //
 
 import SwiftUI
+import AVFAudio
 
 @main
 struct LiveTunerIOSApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+//            print("Setting audio")
+            
+//            setupAudioSession()
+//            print("audio set")
+            
+            Button("Record", systemImage: "arrow.up", action: hi_world)
+        }
+
+    }
+   
+    func hi_world(){
+        print("helloooo aliens")
+    }
+    
+    func setupAudioSession() {
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playAndRecord, options: [.defaultToSpeaker, .allowBluetooth])
+            try session.setActive(true)
+        } catch {
+            fatalError("Failed to configure and activate session.")
         }
     }
     
 }
+
 
 //func init() {
 //
