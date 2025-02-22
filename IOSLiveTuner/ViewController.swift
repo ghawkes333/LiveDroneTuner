@@ -34,15 +34,12 @@ class ViewController: UIViewController {
         guard let input = engine.input else { fatalError() }
 
         guard let device = engine.inputDevice else { fatalError() }
-
-        
         
         self.initialDevice = device
         self.mic = input
         tappableNodeA = Fader(mic)
         
         do{
-            
             let silence = Fader(self.engine.input!, gain: 0)
             self.engine.output = silence
         } catch{
@@ -94,7 +91,23 @@ class ViewController: UIViewController {
                 try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
                 
                 // This line ensures that the audio plays even when the phone is on "silent"
-                try AVAudioSession.sharedInstance().setCategory(.playAndRecord)
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [ .allowBluetoothA2DP])
+                // check if currentRoute is set to a bluetooth audio device
+                let btOutputTypes: [AVAudioSession.Port] = [.bluetoothHFP, .bluetoothA2DP, .bluetoothLE]
+                               let btOutputs = AVAudioSession.sharedInstance().currentRoute.outputs.filter{btOutputTypes.contains($0.portType)}
+                if !btOutputs.isEmpty {
+                                    let builtInMicInput = AVAudioSession.sharedInstance().availableInputs?.filter{$0.portType == .builtInMic}.first
+                                    try? AVAudioSession.sharedInstance().setPreferredInput(builtInMicInput)
+                                    
+                                } else {
+                                    try? AVAudioSession.sharedInstance().setPreferredInput(nil)
+                                }
+                                
+                                try? AVAudioSession.sharedInstance().setActive(true)
+
+
+
+                
                 guard let urlString = urlString else {
                     return
                 }
