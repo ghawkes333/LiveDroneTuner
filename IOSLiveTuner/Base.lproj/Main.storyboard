@@ -32,6 +32,15 @@
                                     <action selector="checkPitch" destination="BYZ-38-t0r" eventType="touchUpInside" id="KI7-YZ-J7U"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ouO-3E-w9m">
+                                <rect key="frame" x="119" y="520" width="156" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Play From Engine"/>
+                                <connections>
+                                    <action selector="playFromEngine" destination="BYZ-38-t0r" eventType="touchUpInside" id="s2N-BB-9BT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

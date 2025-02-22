@@ -52,17 +52,14 @@ class ViewController: UIViewController {
         
         super.init(coder: decoder)
         
-        
-        
         tracker = PitchTap(mic) {pitch, amp in DispatchQueue.main.async {
             print("Pitch: ")
             print(pitch[0])
             
         }}
     
-        self.tracker.start()
-    
         startAudioEngine()
+        self.tracker.start()
         
         print("Tracking started")
     }
@@ -79,8 +76,7 @@ class ViewController: UIViewController {
     
     @IBAction func didTapButton() {
         print("starting mic")
-        mic.start()
-//        engine.start()
+//        mic.start()
         print("Mic started")
         print(tracker.amplitude)
         print("Amp is above")
@@ -98,7 +94,7 @@ class ViewController: UIViewController {
                 try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
                 
                 // This line ensures that the audio plays even when the phone is on "silent"
-                try AVAudioSession.sharedInstance().setCategory(.playback)
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord)
                 guard let urlString = urlString else {
                     return
                 }
@@ -116,7 +112,7 @@ class ViewController: UIViewController {
                 
                 
             } catch{
-                print("Error when attempting to play audio")
+                print("Error when attempting to play audio: \(error)")
             }
         }
     }
