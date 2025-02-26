@@ -17,44 +17,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sft-Kl-kv4">
-                                <rect key="frame" x="145" y="368" width="80" height="35"/>
+                                <rect key="frame" x="169" y="409" width="55.666666666666657" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Play"/>
                                 <connections>
-                                    <action selector="didTapButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="bS1-YY-aeb"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDD-84-L6T">
-                                <rect key="frame" x="145" y="443" width="103" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Print Pitch"/>
-                                <connections>
-                                    <action selector="checkPitch" destination="BYZ-38-t0r" eventType="touchUpInside" id="KI7-YZ-J7U"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ouO-3E-w9m">
-                                <rect key="frame" x="119" y="520" width="156" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Play From Engine"/>
-                                <connections>
-                                    <action selector="playFromEngine" destination="BYZ-38-t0r" eventType="touchUpInside" id="s2N-BB-9BT"/>
+                                    <action selector="startPlaying" destination="BYZ-38-t0r" eventType="touchUpInside" id="c3a-Zb-Pc8"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Sft-Kl-kv4" firstAttribute="centerX" secondItem="YDD-84-L6T" secondAttribute="centerX" id="Bd1-yH-TB2"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="YDD-84-L6T" secondAttribute="bottom" constant="340" id="NH1-eO-8LA"/>
                             <constraint firstItem="Sft-Kl-kv4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="168.66666666666666" id="dUd-mO-Fra"/>
                             <constraint firstItem="Sft-Kl-kv4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="309" id="f9p-5W-DHR"/>
                             <constraint firstItem="Sft-Kl-kv4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="riA-YX-vgK"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="button" destination="Sft-Kl-kv4" id="0iB-lC-jja"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

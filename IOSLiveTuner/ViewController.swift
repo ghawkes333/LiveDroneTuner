@@ -13,153 +13,53 @@ import AudioKitUI
 import AudioToolbox
 import SoundpipeAudioKit
 
-var player : AVAudioPlayer?
 
 
 import UIKit
 
 class ViewController: UIViewController {
-    
-    
-    var engine = AudioEngine()
-    var initialDevice: Device
-    var mic: AudioEngine.InputNode
-    var tappableNodeA: Fader
-    
-    var tracker: PitchTap!
 
+    let engine = AudioEngine()
+    var player = AudioPlayer()
+    
     
     required init?(coder decoder: NSCoder) {
-
-        guard let input = engine.input else { fatalError() }
-
-        guard let device = engine.inputDevice else { fatalError() }
-        
-        self.initialDevice = device
-        self.mic = input
-        tappableNodeA = Fader(mic)
-        
-        do{
-            let silence = Fader(self.engine.input!, gain: 0)
-            self.engine.output = silence
-        } catch{
-            print("Error!")
-        }
-
-        
         super.init(coder: decoder)
-        
-        tracker = PitchTap(mic) {pitch, amp in DispatchQueue.main.async {
-            print("Pitch: ")
-            print(pitch[0])
-            
-        }}
-    
-        startAudioEngine()
-        self.tracker.start()
-        
-        print("Tracking started")
-    }
-    
-    
-    @IBOutlet var button : UIButton!
-    @IBOutlet var recBtn : UIButton!
-    
-    let captureSession = AVCaptureSession()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    @IBAction func didTapButton() {
-        print("starting mic")
-//        mic.start()
-        print("Mic started")
-        print(tracker.amplitude)
-        print("Amp is above")
-        
-        if let player = player, player.isPlaying {
-            // Stop playback
-            button.setTitle("Play", for: .normal)
-            player.stop()
-        } else {
-            button.setTitle("Stop", for: .normal)
-            // Set up player and play
-            let urlString = Bundle.main.path(forResource: "theme", ofType: "mp3")
-            do {
-                try AVAudioSession.sharedInstance().setMode(.default)
-                try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
-                
-                // This line ensures that the audio plays even when the phone is on "silent"
-                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [ .allowBluetoothA2DP])
-                // check if currentRoute is set to a bluetooth audio device
-                let btOutputTypes: [AVAudioSession.Port] = [.bluetoothHFP, .bluetoothA2DP, .bluetoothLE]
-                               let btOutputs = AVAudioSession.sharedInstance().currentRoute.outputs.filter{btOutputTypes.contains($0.portType)}
-                if !btOutputs.isEmpty {
-                                    let builtInMicInput = AVAudioSession.sharedInstance().availableInputs?.filter{$0.portType == .builtInMic}.first
-                                    try? AVAudioSession.sharedInstance().setPreferredInput(builtInMicInput)
-                                    
-                                } else {
-                                    try? AVAudioSession.sharedInstance().setPreferredInput(nil)
-                                }
-                                
-                                try? AVAudioSession.sharedInstance().setActive(true)
-
-
-
-                
-                guard let urlString = urlString else {
-                    return
-                }
-                
-                player = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: urlString))
-                
-                guard let player = player else {
-                    return
-                }
-                
-                // Loop indefinitely
-                player.numberOfLoops = -1
-                player.play()
-                
-                
-                
-            } catch{
-                print("Error when attempting to play audio: \(error)")
-            }
+                    
+        guard let urlString = Bundle.main.path(forResource: "theme", ofType: "mp3") else {
+            print("Could not retrieve URL string")
+            return
         }
+        
+        player = AudioPlayer(url: URL(fileURLWithPath: urlString), buffered: true)!
+            
+        
     }
     
-    func startAudioEngine(){
-        do{
+    func getFileURL() -> URL {
+        let name = "theme.mp3"
+        let url = URL(fileURLWithPath: name)
+        
+        return url
+    }
+    
+    @IBAction func startPlaying(){
+        do {
+            engine.output = player
             try engine.start()
-        } catch {
-            print("Failed to start audio engine \(error)")
+            player.isLooping = true
+            player.start()
+        }catch {
+            print("Could not start engine")
+            return
         }
     }
-        
-        @IBAction func checkPitch(){
-            mic.start()
-            print("Checking...")
-            print(tracker.leftPitch)
-            print(tracker.rightPitch)
-        }
-        
-        func initAudioSession() {
-            
-            guard let audioDevice = AVCaptureDevice.default(for: .audio) else { return }
-        
-            
-        }
-        
-        
-        func update(p : String, a : String){
-            print("Pitch and amp are: ")
-            print(p)
-            print(a)
-        }
-
     
+    func repeatFile(){
+        print("Repeating...")
+    }
+    
+
     
     
 }
