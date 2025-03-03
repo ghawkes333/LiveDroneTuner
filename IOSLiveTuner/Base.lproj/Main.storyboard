@@ -20,9 +20,6 @@
                                 <rect key="frame" x="168.66666666666666" y="368" width="55.666666666666657" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Play"/>
-                                <connections>
-                                    <action selector="startPlaying" destination="BYZ-38-t0r" eventType="touchUpInside" id="c3a-Zb-Pc8"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTW-Rm-1IZ">
                                 <rect key="frame" x="119" y="457" width="154" height="35"/>
@@ -30,7 +27,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Print frequencies"/>
                                 <connections>
-                                    <action selector="checkPitches" destination="BYZ-38-t0r" eventType="touchUpInside" id="Obd-tZ-tAe"/>
+                                    <action selector="checkPitches" destination="BYZ-38-t0r" eventType="touchUpInside" id="VqI-RH-Q9n"/>
                                 </connections>
                             </button>
                         </subviews>
