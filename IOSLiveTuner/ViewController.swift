@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     required init?(coder decoder: NSCoder) {
         
         
-        let path = Bundle.main.path(forResource: "theme.mp3", ofType: nil)!
+        let path = Bundle.main.path(forResource: "Dummy_file_cropped.m4a", ofType: nil)!
         let url = URL(fileURLWithPath: path)
         
         // Set up mic
