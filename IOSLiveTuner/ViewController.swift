@@ -22,6 +22,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var pitchLbl: UILabel!
+    @IBOutlet weak var centsLbl: UILabel!
     
     var avPlayer : AVAudioPlayer?
     var engine = AudioEngine()
@@ -34,6 +35,7 @@ class ViewController: UIViewController {
     let silence: Fader
     
     @Published var pitchLabelStr = "_"
+    @Published var centsLabelStr = "-"
 
     
     required init?(coder decoder: NSCoder) {
@@ -62,8 +64,6 @@ class ViewController: UIViewController {
         
         super.init(coder: decoder)
         
-//        pitchLbl.text = "Yay!"
-
         
         do {
             avPlayer = try AVAudioPlayer(contentsOf: url)
@@ -91,11 +91,10 @@ class ViewController: UIViewController {
             let noteNamesWithSharps = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
             let noteNamesWithFlats = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
             
-            guard amp > 0.1 else {print("Amp: ", amp); return}
+            guard amp > 0.1 else {return}
             
-            print("Success!")
             var freq = pitch
-    
+
             while freq > Float(noteFrequencies[noteFrequencies.count - 1]){
                 freq = freq / 2.0
             }
@@ -116,14 +115,37 @@ class ViewController: UIViewController {
                 }
             }
             
+            var refNoteSameOct = noteFrequencies[index]
+            var lastNoteSameOct = noteFrequencies[noteFrequencies.count - 1]
+            var pitchPrecise = Double(pitch)
+            
+            while (pitchPrecise > lastNoteSameOct){
+                lastNoteSameOct = lastNoteSameOct * 2
+                
+                refNoteSameOct = refNoteSameOct * 2
+            }
+            
+            
+            var cents = Int(round(1200 * log2(pitchPrecise / refNoteSameOct)))
+            
+            var centsStr = ""
+            if (cents < 0){
+                centsStr = "\(cents)"
+            } else {
+                centsStr = "+\(cents)"
+            }
+            
             let octave = Int(log2f(pitch / freq))
     
             var noteNameWithSharps = "\(noteNamesWithSharps[index])\(octave)"
             var noteNameWithFlats = "\(noteNamesWithFlats[index])\(octave)"
     
-            print(noteNameWithFlats)
             self.pitchLabelStr = noteNameWithFlats
+            
             self.pitchLbl.text = noteNameWithFlats
+            
+            self.centsLbl.text = centsStr
+            self.centsLabelStr = centsStr
         }}
         
         tracker.start()
@@ -141,7 +163,6 @@ class ViewController: UIViewController {
         
         do{
             try engine.start()
-            print("Started")
         } catch {
             print("Engine failed")
         }
@@ -154,48 +175,6 @@ class ViewController: UIViewController {
         tracker.start()
     }
     
-    func freqToPitch(pitch : Float, amp : Float){
-        
-//        let noteFrequencies = [16.35, 17.32, 18.35, 19.45, 20.6, 21.83, 23.12, 24.5, 25.96, 27.5, 29.14, 30.87]
-//        let noteNamesWithSharps = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
-//        let noteNamesWithFlats = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
-        
-//        guard amp > 0.1 else {print("Amp: ", amp); return}
-        
-//        print("Success!")
-//        var freq = pitch
-//        
-//        while freq > Float(noteFrequencies[noteFrequencies.count - 1]){
-//            freq = freq / 2.0
-//        }
-//        
-//        while freq < Float(noteFrequencies[0]){
-//            freq = freq * 2.0
-//        }
-        
-//        var minDistance: Float = 10000.0
-//        
-//        var index = 0
-//        
-//        for j in 0 ..< noteFrequencies.count {
-//            let distance = fabsf(Float(noteFrequencies[j]) - freq)
-//            if distance < minDistance {
-//                index = j
-//                minDistance = distance
-//            }
-//        }
-        
-//        let octave = Int(log2f(pitch / freq))
-//        
-//        var noteNameWithSharps = "\(noteNamesWithSharps[index])\(octave)"
-//        var noteNameWithFlats = "\(noteNamesWithFlats[index])\(octave)"
-//        
-//        print(noteNameWithFlats)
-//        pitchLbl.text = noteNameWithFlats
-        
-        
-        
-    }
 
     
     
