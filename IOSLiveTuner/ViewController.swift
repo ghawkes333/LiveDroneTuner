@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var pitchLbl: UILabel!
     @IBOutlet weak var centsLbl: UILabel!
+    @IBOutlet weak var playPauseBtn: UIButton!
     
     var avPlayer : AVAudioPlayer?
     var engine = AudioEngine()
@@ -36,22 +37,18 @@ class ViewController: UIViewController {
     
     @Published var pitchLabelStr = "_"
     @Published var centsLabelStr = "-"
-
+    
     
     required init?(coder decoder: NSCoder) {
         
-                
+        
         let path = Bundle.main.path(forResource: "theme.mp3", ofType: nil)!
         let url = URL(fileURLWithPath: path)
-        
-
-        
-        
         
         // Set up mic
         guard let input = engine.input else{fatalError()}
         guard let device = engine.inputDevice else {fatalError()}
-                
+        
         initialDevice = device
         
         mic = input
@@ -68,14 +65,12 @@ class ViewController: UIViewController {
         do {
             avPlayer = try AVAudioPlayer(contentsOf: url)
             avPlayer?.numberOfLoops = -1
-            avPlayer?.play()
-            print("Playing...")
         } catch {
             print("Could not load file")
             return
         }
         
-    
+        
         engine.output = silence
         do{
             try Settings.setSession(category: .playAndRecord)
@@ -94,19 +89,19 @@ class ViewController: UIViewController {
             guard amp > 0.1 else {return}
             
             var freq = pitch
-
+            
             while freq > Float(noteFrequencies[noteFrequencies.count - 1]){
                 freq = freq / 2.0
             }
-    
+            
             while freq < Float(noteFrequencies[0]){
                 freq = freq * 2.0
             }
             
             var minDistance: Float = 10000.0
-    
+            
             var index = 0
-    
+            
             for j in 0 ..< noteFrequencies.count {
                 let distance = fabsf(Float(noteFrequencies[j]) - freq)
                 if distance < minDistance {
@@ -136,10 +131,10 @@ class ViewController: UIViewController {
             }
             
             let octave = Int(log2f(pitch / freq))
-    
+            
             var noteNameWithSharps = "\(noteNamesWithSharps[index])\(octave)"
             var noteNameWithFlats = "\(noteNamesWithFlats[index])\(octave)"
-    
+            
             self.pitchLabelStr = noteNameWithFlats
             
             self.pitchLbl.text = noteNameWithFlats
@@ -170,10 +165,16 @@ class ViewController: UIViewController {
         
     }
     
-    
-    @IBAction func checkPitches(){
-        tracker.start()
+    @IBAction func playAudio(){
+        if (avPlayer?.isPlaying != nil && avPlayer!.isPlaying){
+            avPlayer?.pause()
+            playPauseBtn.setImage(UIImage(systemName: "play.fill"), for: UIControl.State.normal)
+        } else {
+            avPlayer?.play()
+            playPauseBtn.setImage(UIImage(systemName: "pause.fill"), for: UIControl.State.normal)
+        }
     }
+    
     
 
     
