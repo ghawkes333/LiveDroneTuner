@@ -61,6 +61,7 @@ class ViewController: UIViewController {
         
         super.init(coder: decoder)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handleAudioRouteChange), name: AVAudioSession.routeChangeNotification, object: nil)
         
         do {
             avPlayer = try AVAudioPlayer(contentsOf: url)
@@ -147,7 +148,7 @@ class ViewController: UIViewController {
         
         var session = AVAudioSession.sharedInstance()
         do {
-            try session.setCategory(.playAndRecord)
+            try session.setCategory(.playAndRecord, options: [.allowBluetoothA2DP])
             try session.setActive(true)
         } catch {
             print("Could not set session category")
@@ -163,6 +164,23 @@ class ViewController: UIViewController {
         }
         
         
+    }
+    
+    @objc func handleAudioRouteChange(notification : Notification){
+        guard let userInfo = notification.userInfo,
+              let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+                let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
+            return
+        }
+        switch reason{
+        case .newDeviceAvailable:
+            print("New device is available")
+        case .oldDeviceUnavailable:
+            print("Old device unavailable")
+        default:
+            print("Route change for a different reason: ", reason)
+        }
+        print("The route changed due to ", reason.rawValue)
     }
     
     @IBAction func playAudio(){
