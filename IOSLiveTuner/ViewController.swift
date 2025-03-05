@@ -26,7 +26,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var playPauseBtn: UIButton!
     
     var avPlayer : AVAudioPlayer?
-    var engine = AudioEngine()
+    
+    let playerEngine : AVAudioEngine
+    var audioFile = AVAudioFile()
+    var avPlayerNode = AVAudioPlayerNode()
+    var buffer : AVAudioPCMBuffer
+    
+    var micEngine = AudioEngine()
     var tappableNodeA : Fader
     var tappableNodeB : Fader
     var tappableNodeC : Fader
@@ -46,32 +52,53 @@ class ViewController: UIViewController {
         let url = URL(fileURLWithPath: path)
         
         // Set up mic
-        guard let input = engine.input else{fatalError()}
-        guard let device = engine.inputDevice else {fatalError()}
+        guard let input = micEngine.input else{fatalError()}
+        guard let device = micEngine.inputDevice else {fatalError()}
         
         initialDevice = device
         
+        playerEngine = AVAudioEngine()
         mic = input
         tappableNodeA = Fader(mic)
         tappableNodeB = Fader(tappableNodeA)
         tappableNodeC = Fader(tappableNodeB)
         
-        silence = Fader(tappableNodeC, gain: 0)
+        buffer = AVAudioPCMBuffer()
         
+        silence = Fader(tappableNodeC, gain: 0)
+
         
         super.init(coder: decoder)
         
         
+    
+        
         do {
-            avPlayer = try AVAudioPlayer(contentsOf: url)
-            avPlayer?.numberOfLoops = -1
+            let file = try AVAudioFile(forReading: url)
+            guard let b = try AVAudioPCMBuffer(file: file) else {
+                print("Could not get Audio buffer");
+                return
+            }
+            buffer = b
+            try audioFile = AVAudioFile(forReading: url)
+//            try audioFile.read(into:/* */buffer)
+            playerEngine.attach(avPlayerNode)
+            
+            playerEngine.connect(avPlayerNode, to: playerEngine.mainMixerNode, format: AVAudioFormat.init(standardFormatWithSampleRate: 48000, channels: 1))
+            avPlayerNode.scheduleBuffer(buffer, at: nil, options: .loops)
+            
+            try playerEngine.start()
+            
+//            avPlayer = try AVAudioPlayer(contentsOf: url)
+//            avPlayer?.numberOfLoops = -1
+//            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetoothA2DP, .mixWithOthers])
         } catch {
-            print("Could not load file")
+            print("Could not set up AVF Audio")
             return
         }
         
         
-        engine.output = silence
+        micEngine.output = silence
         do{
             try Settings.setSession(category: .playAndRecord)
         } catch {
@@ -145,19 +172,11 @@ class ViewController: UIViewController {
         
         tracker.start()
         
-        var session = AVAudioSession.sharedInstance()
-        do {
-            try session.setCategory(.playAndRecord)
-            try session.setActive(true)
-        } catch {
-            print("Could not set session category")
-            return
-        }
         
         
         
         do{
-            try engine.start()
+            try micEngine.start()
         } catch {
             print("Engine failed")
         }
@@ -166,11 +185,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func playAudio(){
-        if (avPlayer?.isPlaying != nil && avPlayer!.isPlaying){
-            avPlayer?.pause()
+//        if (avPlayer?.isPlaying != nil && avPlayer!.isPlaying){
+//            avPlayer?.pause()
+//            playPauseBtn.setImage(UIImage(systemName: "play.fill"), for: UIControl.State.normal)
+//        } else {
+//            avPlayer?.play()
+//            playPauseBtn.setImage(UIImage(systemName: "pause.fill"), for: UIControl.State.normal)
+//        }
+        print(avPlayerNode.isPlaying)
+            if (avPlayerNode.isPlaying){
+            avPlayerNode.pause()
             playPauseBtn.setImage(UIImage(systemName: "play.fill"), for: UIControl.State.normal)
         } else {
-            avPlayer?.play()
+            avPlayerNode.play()
             playPauseBtn.setImage(UIImage(systemName: "pause.fill"), for: UIControl.State.normal)
         }
     }
