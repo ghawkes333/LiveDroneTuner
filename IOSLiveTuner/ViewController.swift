@@ -73,10 +73,17 @@ class ViewController: UIViewController {
         
         
         engine.output = silence
-        do{
-            try Settings.setSession(category: .playAndRecord)
+        
+        var session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.multiRoute)
+            try session.setActive(true)
+            try
+            session.setPreferredInput(session.availableInputs?.filter({$0.portType == .builtInMic}).first)
+            
+            
         } catch {
-            print("Failed to set AudioKit settings")
+            print("Could not set session category")
             return
         }
         
@@ -146,14 +153,6 @@ class ViewController: UIViewController {
         
         tracker.start()
         
-        var session = AVAudioSession.sharedInstance()
-        do {
-            try session.setCategory(.playAndRecord, options: [.allowBluetoothA2DP])
-            try session.setActive(true)
-        } catch {
-            print("Could not set session category")
-            return
-        }
         
         
         
@@ -167,20 +166,7 @@ class ViewController: UIViewController {
     }
     
     @objc func handleAudioRouteChange(notification : Notification){
-        guard let userInfo = notification.userInfo,
-              let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
-                let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
-            return
-        }
-        switch reason{
-        case .newDeviceAvailable:
-            print("New device is available")
-        case .oldDeviceUnavailable:
-            print("Old device unavailable")
-        default:
-            print("Route change for a different reason: ", reason)
-        }
-        print("The route changed due to ", reason.rawValue)
+        print("Route changed")
     }
     
     @IBAction func playAudio(){
