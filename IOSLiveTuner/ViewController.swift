@@ -73,7 +73,13 @@ class ViewController: UIViewController {
         
         engine.output = silence
         do{
-            try Settings.setSession(category: .playAndRecord)
+            try Settings.setSession(category: .playAndRecord, with: [.allowBluetooth, .mixWithOthers])
+            var availableInputs = AVAudioSession.sharedInstance().availableInputs
+            if let builtInMic = availableInputs?.first(where: { $0.portType == .builtInMic }) {
+                try AVAudioSession.sharedInstance().setPreferredInput(builtInMic)
+                    print("Switched to internal microphone")
+                }
+            
         } catch {
             print("Failed to set AudioKit settings")
             return
@@ -145,14 +151,14 @@ class ViewController: UIViewController {
         
         tracker.start()
         
-        var session = AVAudioSession.sharedInstance()
-        do {
-            try session.setCategory(.playAndRecord)
-            try session.setActive(true)
-        } catch {
-            print("Could not set session category")
-            return
-        }
+//        var session = AVAudioSession.sharedInstance()
+//        do {
+//            try session.setCategory(.multiRoute)
+//            try session.setActive(true)
+//        } catch let error {
+//            print("Could not set session category: ", error)
+//            return
+//        }
         
         
         
