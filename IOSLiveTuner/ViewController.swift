@@ -38,6 +38,12 @@ class ViewController: UIViewController {
     @Published var pitchLabelStr = "_"
     @Published var centsLabelStr = "-"
     
+    @IBOutlet weak var animateBtn: UIButton!
+    @IBOutlet weak var tunerNeedle: UIImageView!
+    
+    var rotated = false
+    var setAnchor = false
+    
     
     required init?(coder decoder: NSCoder) {
         
@@ -141,6 +147,10 @@ class ViewController: UIViewController {
             
             self.centsLbl.text = centsStr
             self.centsLabelStr = centsStr
+            
+                        
+            // The needle stays within +/- 50 degrees
+            self.moveNeedleTo(degrees: Double(cents))
         }}
         
         tracker.start()
@@ -175,8 +185,31 @@ class ViewController: UIViewController {
         }
     }
     
-    
-
+    func moveNeedleTo(degrees : Double){
+        let radians = degrees * .pi / 180.0
+        if (tunerNeedle.image?.cgImage == nil){
+            print("Image or CGImage is nil")
+            return
+        }
+        
+        let viewHeight = tunerNeedle.bounds.height
+        
+        if (!setAnchor){
+            tunerNeedle.anchorPoint = CGPointMake(0.5, 1)
+            setAnchor = true
+        }
+        
+        if (!rotated){
+                
+            self.tunerNeedle.transform = CGAffineTransformMakeTranslation(0, viewHeight / 2.0).rotated(by: radians)
+            rotated = true
+        } else {
+                self.tunerNeedle.transform = CGAffineTransformMakeRotation(0).translatedBy(x: 0, y: viewHeight / 2.0)
+            rotated = false
+            
+        }
+        
+    }
     
     
 }
