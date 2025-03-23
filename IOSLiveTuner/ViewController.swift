@@ -73,7 +73,7 @@ class ViewController: UIViewController {
         
         engine.output = silence
         do{
-            try Settings.setSession(category: .playAndRecord, with: [.allowBluetooth, .mixWithOthers])
+            try Settings.setSession(category: .playAndRecord, with: [.allowBluetoothA2DP])
             var availableInputs = AVAudioSession.sharedInstance().availableInputs
             if let builtInMic = availableInputs?.first(where: { $0.portType == .builtInMic }) {
                 try AVAudioSession.sharedInstance().setPreferredInput(builtInMic)
