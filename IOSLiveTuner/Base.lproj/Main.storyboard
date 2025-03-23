@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -26,7 +27,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LUr-wt-4vq">
-                                <rect key="frame" x="-1" y="647" width="393.00000000000023" height="119.99999999998477"/>
+                                <rect key="frame" x="-1" y="647" width="393" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="119.99999999998477" id="GSv-fT-fVV"/>
                                 </constraints>
@@ -51,6 +52,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BWg-uL-LTh">
+                                <rect key="frame" x="142" y="765" width="111" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <menu key="menu" id="t1E-lB-eZ6">
+                                    <children>
+                                        <command title="Piano Audio" id="6t3-uY-N6i"/>
+                                        <command title="Piano + Vibes Audio" id="SDS-7T-wFE"/>
+                                        <command title="Default cropped audio" id="a7v-Ff-ai1"/>
+                                    </children>
+                                </menu>
+                                <state key="normal" title="Notes"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -71,7 +84,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="audioFileBtn" destination="BWg-uL-LTh" id="fuF-pq-9iG"/>
                         <outlet property="centsLbl" destination="vny-Zd-wHd" id="xVo-jy-wAu"/>
+                        <outlet property="menuBtn" destination="8bC-Xf-vdC" id="6zk-w1-x6S"/>
                         <outlet property="pitchLbl" destination="6vj-SU-V0p" id="XGr-0U-G8s"/>
                         <outlet property="playPauseBtn" destination="LUr-wt-4vq" id="XLo-kp-UZX"/>
                         <outlet property="tunerNeedle" destination="TeU-UL-0vp" id="gMG-EB-4EE"/>

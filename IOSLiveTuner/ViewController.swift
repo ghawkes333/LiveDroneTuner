@@ -24,7 +24,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var pitchLbl: UILabel!
     @IBOutlet weak var centsLbl: UILabel!
     @IBOutlet weak var playPauseBtn: UIButton!
+    @IBOutlet weak var noteNameBtn: UIButton!
+    @IBOutlet weak var audioFileBtn: UIButton!
     
+    @IBOutlet var menuBtn: UIButton!
+
     var avPlayer : AVAudioPlayer?
     var engine = AudioEngine()
     var tappableNodeA : Fader
@@ -44,11 +48,13 @@ class ViewController: UIViewController {
     var rotated = false
     var setAnchor = false
     
+    var selectedAudioFile = ""
+    
     
     required init?(coder decoder: NSCoder) {
         
         
-        let path = Bundle.main.path(forResource: "Dummy_file_cropped.m4a", ofType: nil)!
+        let path = Bundle.main.path(forResource: "piano.m4a", ofType: nil)!
         let url = URL(fileURLWithPath: path)
         
         // Set up mic
@@ -209,6 +215,85 @@ class ViewController: UIViewController {
             
         }
         
+    }
+    
+    func switchAudio(action: UIAction){
+        print(action.title)
+        let alreadyPlaying = avPlayer!.isPlaying
+        
+        avPlayer?.stop()
+        
+        avPlayer = nil
+        
+        let audioFileName = action.title + ".m4a"
+        let path = Bundle.main.path(forResource: audioFileName, ofType: nil)!
+        let url = URL(fileURLWithPath: path)
+        
+        do {
+            avPlayer = try AVAudioPlayer(contentsOf: url)
+            avPlayer?.numberOfLoops = -1
+            
+            if (alreadyPlaying){
+                avPlayer?.play()
+            }
+        } catch {
+            print("Error setting audio player to new file: \(error)")
+        }
+        
+    }
+    
+    func displayAudioFiles(){
+        let noteNames = getAllAudioFiles()
+        
+        var menuChildren: [UIMenuElement] = []
+                
+        for file in noteNames {
+            let audioName = removeAudioFileType(filename: file)
+            if (selectedAudioFile == "") {
+                selectedAudioFile = file
+                menuChildren.append(UIAction(title: audioName, state: .on, handler: switchAudio))
+            } else {
+                menuChildren.append(UIAction(title: audioName, handler: switchAudio))
+                
+            }
+        }
+        
+        
+        audioFileBtn.menu = UIMenu(options: .displayInline, children: menuChildren)
+        audioFileBtn.showsMenuAsPrimaryAction = true
+        audioFileBtn.changesSelectionAsPrimaryAction = true
+        
+        
+    }
+    
+    func removeAudioFileType(filename : String) -> String {
+        return (filename as NSString).deletingPathExtension
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        displayAudioFiles()
+    }
+                                
+    
+    func getAllAudioFiles() -> [String]{
+        let fm = FileManager.default
+        let path = Bundle.main.resourcePath!
+        var audioNames: [String] = []
+        do {
+            let items = try fm.contentsOfDirectory(atPath: path)
+            for i in items {
+                if i.hasSuffix(".m4a"){
+                    audioNames.append(i)
+                }
+            }
+            
+        } catch {
+            print("Error getting audio files: \(error)")
+        }
+        
+        return audioNames
     }
     
     
