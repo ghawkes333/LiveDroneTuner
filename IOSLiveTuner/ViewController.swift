@@ -24,11 +24,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var pitchLbl: UILabel!
     @IBOutlet weak var centsLbl: UILabel!
     @IBOutlet weak var playPauseBtn: UIButton!
-    @IBOutlet weak var noteNameBtn: UIButton!
     @IBOutlet weak var audioFileBtn: UIButton!
+    @IBOutlet weak var menuBtn: UIButton!
     
-    @IBOutlet var menuBtn: UIButton!
-
     var avPlayer : AVAudioPlayer?
     var engine = AudioEngine()
     var tappableNodeA : Fader
@@ -41,20 +39,16 @@ class ViewController: UIViewController {
     
     @Published var pitchLabelStr = "_"
     @Published var centsLabelStr = "-"
-    
+
+
     @IBOutlet weak var animateBtn: UIButton!
     @IBOutlet weak var tunerNeedle: UIImageView!
-    
-    var rotated = false
-    var setAnchor = false
-    
-    var selectedAudioFile = ""
     
     
     required init?(coder decoder: NSCoder) {
         
         
-        let path = Bundle.main.path(forResource: "piano.m4a", ofType: nil)!
+        let path = Bundle.main.path(forResource: "Dummy_file_cropped.m4a", ofType: nil)!
         let url = URL(fileURLWithPath: path)
         
         // Set up mic
@@ -85,13 +79,20 @@ class ViewController: UIViewController {
         
         engine.output = silence
         do{
-            try Settings.setSession(category: .playAndRecord)
+            try Settings.setSession(category: .playAndRecord, with: [.allowBluetoothA2DP])
+            var availableInputs = AVAudioSession.sharedInstance().availableInputs
+            if let builtInMic = availableInputs?.first(where: { $0.portType == .builtInMic }) {
+                try AVAudioSession.sharedInstance().setPreferredInput(builtInMic)
+                    print("Switched to internal microphone")
+                }
+            
         } catch {
             print("Failed to set AudioKit settings")
             return
         }
         
         tracker = PitchTap(mic) {p, a in DispatchQueue.main.async {
+            print("Pitch: ", p)
             var pitch = p[0]
             var amp = a[0]
             let noteFrequencies = [16.35, 17.32, 18.35, 19.45, 20.6, 21.83, 23.12, 24.5, 25.96, 27.5, 29.14, 30.87]
@@ -153,22 +154,18 @@ class ViewController: UIViewController {
             
             self.centsLbl.text = centsStr
             self.centsLabelStr = centsStr
-            
-                        
-            // The needle stays within +/- 50 degrees
-            self.moveNeedleTo(degrees: Double(cents))
         }}
         
         tracker.start()
         
-        var session = AVAudioSession.sharedInstance()
-        do {
-            try session.setCategory(.playAndRecord)
-            try session.setActive(true)
-        } catch {
-            print("Could not set session category")
-            return
-        }
+//        var session = AVAudioSession.sharedInstance()
+//        do {
+//            try session.setCategory(.multiRoute)
+//            try session.setActive(true)
+//        } catch let error {
+//            print("Could not set session category: ", error)
+//            return
+//        }
         
         
         
@@ -191,110 +188,8 @@ class ViewController: UIViewController {
         }
     }
     
-    func moveNeedleTo(degrees : Double){
-        let radians = degrees * .pi / 180.0
-        if (tunerNeedle.image?.cgImage == nil){
-            print("Image or CGImage is nil")
-            return
-        }
-        
-        let viewHeight = tunerNeedle.bounds.height
-        
-        if (!setAnchor){
-            tunerNeedle.anchorPoint = CGPointMake(0.5, 1)
-            setAnchor = true
-        }
-        
-        if (!rotated){
-                
-            self.tunerNeedle.transform = CGAffineTransformMakeTranslation(0, viewHeight / 2.0).rotated(by: radians)
-            rotated = true
-        } else {
-                self.tunerNeedle.transform = CGAffineTransformMakeRotation(0).translatedBy(x: 0, y: viewHeight / 2.0)
-            rotated = false
-            
-        }
-        
-    }
     
-    func switchAudio(action: UIAction){
-        print(action.title)
-        let alreadyPlaying = avPlayer!.isPlaying
-        
-        avPlayer?.stop()
-        
-        avPlayer = nil
-        
-        let audioFileName = action.title + ".m4a"
-        let path = Bundle.main.path(forResource: audioFileName, ofType: nil)!
-        let url = URL(fileURLWithPath: path)
-        
-        do {
-            avPlayer = try AVAudioPlayer(contentsOf: url)
-            avPlayer?.numberOfLoops = -1
-            
-            if (alreadyPlaying){
-                avPlayer?.play()
-            }
-        } catch {
-            print("Error setting audio player to new file: \(error)")
-        }
-        
-    }
-    
-    func displayAudioFiles(){
-        let noteNames = getAllAudioFiles()
-        
-        var menuChildren: [UIMenuElement] = []
-                
-        for file in noteNames {
-            let audioName = removeAudioFileType(filename: file)
-            if (selectedAudioFile == "") {
-                selectedAudioFile = file
-                menuChildren.append(UIAction(title: audioName, state: .on, handler: switchAudio))
-            } else {
-                menuChildren.append(UIAction(title: audioName, handler: switchAudio))
-                
-            }
-        }
-        
-        
-        audioFileBtn.menu = UIMenu(options: .displayInline, children: menuChildren)
-        audioFileBtn.showsMenuAsPrimaryAction = true
-        audioFileBtn.changesSelectionAsPrimaryAction = true
-        
-        
-    }
-    
-    func removeAudioFileType(filename : String) -> String {
-        return (filename as NSString).deletingPathExtension
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        displayAudioFiles()
-    }
-                                
-    
-    func getAllAudioFiles() -> [String]{
-        let fm = FileManager.default
-        let path = Bundle.main.resourcePath!
-        var audioNames: [String] = []
-        do {
-            let items = try fm.contentsOfDirectory(atPath: path)
-            for i in items {
-                if i.hasSuffix(".m4a"){
-                    audioNames.append(i)
-                }
-            }
-            
-        } catch {
-            print("Error getting audio files: \(error)")
-        }
-        
-        return audioNames
-    }
+
     
     
 }
