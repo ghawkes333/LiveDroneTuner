@@ -25,7 +25,7 @@ class ViewController: UIViewController {
 
   @IBOutlet var menuBtn: UIButton!
 
-  var avPlayer: AVAudioPlayer?
+    var avPlayer: AudioPlayer?
   var engine = AudioEngine()
   var tappableNodeA: Fader
   var tappableNodeB: Fader
@@ -48,8 +48,6 @@ class ViewController: UIViewController {
 
   required init?(coder decoder: NSCoder) {
 
-    let path = Bundle.main.path(forResource: "piano.m4a", ofType: nil)!
-    let url = URL(fileURLWithPath: path)
 
     // Set up mic
     guard let input = engine.input else { fatalError() }
@@ -65,114 +63,6 @@ class ViewController: UIViewController {
     silence = Fader(tappableNodeC, gain: 0)
 
     super.init(coder: decoder)
-
-    do {
-      avPlayer = try AVAudioPlayer(contentsOf: url)
-      avPlayer?.numberOfLoops = -1
-    } catch {
-      print("Could not load file")
-      return
-    }
-
-    engine.output = silence
-    do {
-      try Settings.setSession(category: .playAndRecord, with: [.allowBluetoothA2DP])
-      var availableInputs = AVAudioSession.sharedInstance().availableInputs
-      if let builtInMic = availableInputs?.first(where: { $0.portType == .builtInMic }) {
-        try AVAudioSession.sharedInstance().setPreferredInput(builtInMic)
-        print("Switched to internal microphone")
-      }
-    } catch {
-      print("Failed to set AudioKit settings")
-      return
-    }
-
-    tracker = PitchTap(mic) { p, a in
-      DispatchQueue.main.async {
-        var pitch = p[0]
-        var amp = a[0]
-        let noteFrequencies = [
-          16.35, 17.32, 18.35, 19.45, 20.6, 21.83, 23.12, 24.5, 25.96, 27.5, 29.14, 30.87,
-        ]
-        let noteNamesWithSharps = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
-        let noteNamesWithFlats = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
-
-        guard amp > 0.1 else { return }
-
-        var freq = pitch
-
-        while freq > Float(noteFrequencies[noteFrequencies.count - 1]) {
-          freq = freq / 2.0
-        }
-
-        while freq < Float(noteFrequencies[0]) {
-          freq = freq * 2.0
-        }
-
-        var minDistance: Float = 10000.0
-
-        var index = 0
-
-        for j in 0..<noteFrequencies.count {
-          let distance = fabsf(Float(noteFrequencies[j]) - freq)
-          if distance < minDistance {
-            index = j
-            minDistance = distance
-          }
-        }
-
-        var refNoteSameOct = noteFrequencies[index]
-        var lastNoteSameOct = noteFrequencies[noteFrequencies.count - 1]
-        var pitchPrecise = Double(pitch)
-
-        while pitchPrecise > lastNoteSameOct {
-          lastNoteSameOct = lastNoteSameOct * 2
-
-          refNoteSameOct = refNoteSameOct * 2
-        }
-
-        var cents = Int(round(1200 * log2(pitchPrecise / refNoteSameOct)))
-
-        var centsStr = ""
-        if cents < 0 {
-          centsStr = "\(cents)"
-        } else {
-          centsStr = "+\(cents)"
-        }
-
-        let octave = Int(log2f(pitch / freq))
-
-        var noteNameWithSharps = "\(noteNamesWithSharps[index])\(octave)"
-        var noteNameWithFlats = "\(noteNamesWithFlats[index])\(octave)"
-
-        self.pitchLabelStr = noteNameWithFlats
-
-        self.pitchLbl.text = noteNameWithFlats
-
-        self.centsLbl.text = centsStr
-        self.centsLabelStr = centsStr
-
-        // The needle stays within +/- 50 degrees
-        self.moveNeedleTo(degrees: Double(cents))
-      }
-    }
-
-    tracker.start()
-
-//    var session = AVAudioSession.sharedInstance()
-//    do {
-//      try session.setCategory(.playAndRecord)
-//      try session.setActive(true)
-//    } catch {
-//      print("Could not set session category")
-//      return
-//    }
-
-    do {
-      try engine.start()
-    } catch {
-      print("Engine failed")
-    }
 
   }
 
@@ -209,18 +99,135 @@ class ViewController: UIViewController {
     return (filename as NSString).deletingPathExtension
   }
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+      super.viewDidAppear(animated)
+      
+      let path = Bundle.main.path(forResource: "piano.m4a", ofType: nil)!
+      let url = URL(fileURLWithPath: path)
+    
+      do {
+          avPlayer = try AudioPlayer()
+          try avPlayer?.load(url: url, buffered: true)
+          avPlayer?.isLooping = true
+          engine.output = Mixer(Fader(mic, gain: 0), avPlayer!)
+          print("Engine is started after output: ")
+          print(engine.avEngine.isRunning)
+      } catch {
+        print("Could not load file: \(error)")
+        return
+      }
+
+      do {
+        try Settings.setSession(category: .playAndRecord, with: [.allowBluetoothA2DP])
+        var availableInputs = AVAudioSession.sharedInstance().availableInputs
+        if let builtInMic = availableInputs?.first(where: { $0.portType == .builtInMic }) {
+          try AVAudioSession.sharedInstance().setPreferredInput(builtInMic)
+          print("Switched to internal microphone")
+        }
+      } catch {
+        print("Failed to set AudioKit settings")
+        return
+      }
+
+      tracker = PitchTap(mic) { p, a in
+        DispatchQueue.main.async {
+          var pitch = p[0]
+          var amp = a[0]
+          let noteFrequencies = [
+            16.35, 17.32, 18.35, 19.45, 20.6, 21.83, 23.12, 24.5, 25.96, 27.5, 29.14, 30.87,
+          ]
+          let noteNamesWithSharps = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
+          let noteNamesWithFlats = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
+
+          guard amp > 0.1 else { return }
+
+          var freq = pitch
+
+          while freq > Float(noteFrequencies[noteFrequencies.count - 1]) {
+            freq = freq / 2.0
+          }
+
+          while freq < Float(noteFrequencies[0]) {
+            freq = freq * 2.0
+          }
+
+          var minDistance: Float = 10000.0
+
+          var index = 0
+
+          for j in 0..<noteFrequencies.count {
+            let distance = fabsf(Float(noteFrequencies[j]) - freq)
+            if distance < minDistance {
+              index = j
+              minDistance = distance
+            }
+          }
+
+          var refNoteSameOct = noteFrequencies[index]
+          var lastNoteSameOct = noteFrequencies[noteFrequencies.count - 1]
+          var pitchPrecise = Double(pitch)
+
+          while pitchPrecise > lastNoteSameOct {
+            lastNoteSameOct = lastNoteSameOct * 2
+
+            refNoteSameOct = refNoteSameOct * 2
+          }
+
+          var cents = Int(round(1200 * log2(pitchPrecise / refNoteSameOct)))
+
+          var centsStr = ""
+          if cents < 0 {
+            centsStr = "\(cents)"
+          } else {
+            centsStr = "+\(cents)"
+          }
+
+          let octave = Int(log2f(pitch / freq))
+
+          var noteNameWithSharps = "\(noteNamesWithSharps[index])\(octave)"
+          var noteNameWithFlats = "\(noteNamesWithFlats[index])\(octave)"
+
+          self.pitchLabelStr = noteNameWithFlats
+
+          self.pitchLbl.text = noteNameWithFlats
+
+          self.centsLbl.text = centsStr
+          self.centsLabelStr = centsStr
+
+          // The needle stays within +/- 50 degrees
+          self.moveNeedleTo(degrees: Double(cents))
+        }
+      }
+
+      tracker.start()
+
+      do {
+          try engine.start()
+          print("Engine is started: ")
+          print(engine.avEngine.isRunning)
+      } catch {
+        print("Engine failed")
+      }
 
     displayAudioFiles()
   }
 
 
   @IBAction func playAudio() {
-    if avPlayer?.isPlaying != nil && avPlayer!.isPlaying {
+      print("Engine is running before playback: ")
+      print(engine.avEngine.isRunning)
+      if (!engine.avEngine.isRunning){
+          do{
+              try engine.start()
+          } catch {
+              print("Can't start engine in playAudio")
+          }
+      }
+      if avPlayer?.isPlaying != nil && avPlayer!.isPlaying {
       avPlayer?.pause()
       playPauseBtn.setImage(UIImage(systemName: "play.fill"), for: UIControl.State.normal)
     } else {
+    
       avPlayer?.play()
       playPauseBtn.setImage(UIImage(systemName: "pause.fill"), for: UIControl.State.normal)
     }
@@ -231,8 +238,9 @@ class ViewController: UIViewController {
 
 
   func switchAudio(action: UIAction) {
+      print("Switching audio")
     print(action.title)
-    let alreadyPlaying = avPlayer!.isPlaying
+    let alreadyPlaying = avPlayer?.isPlaying ?? false
 
     avPlayer?.stop()
 
@@ -243,9 +251,13 @@ class ViewController: UIViewController {
     let url = URL(fileURLWithPath: path)
 
     do {
-      avPlayer = try AVAudioPlayer(contentsOf: url)
-      avPlayer?.numberOfLoops = -1
-
+        avPlayer = try AudioPlayer()
+        try avPlayer?.load(url: url, buffered: true)
+        avPlayer?.isLooping = true
+        engine.stop()
+        engine.output = Mixer(Fader(mic, gain: 0), avPlayer!)
+        try engine.start()
+        
       if alreadyPlaying {
         avPlayer?.play()
       }
