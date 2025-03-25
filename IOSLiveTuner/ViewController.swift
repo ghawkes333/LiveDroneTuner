@@ -44,6 +44,7 @@ class ViewController: UIViewController {
   var rotated = false
   var setAnchor = false
 
+  let defaultAudioFile = "C4"
   var selectedAudioFile = ""
 
   required init?(coder decoder: NSCoder) {
@@ -102,7 +103,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
       super.viewDidAppear(animated)
       
-      let path = Bundle.main.path(forResource: "piano.m4a", ofType: nil)!
+      let path = Bundle.main.path(forResource: defaultAudioFile + ".m4a", ofType: nil)!
       let url = URL(fileURLWithPath: path)
     
       do {
