@@ -132,71 +132,39 @@ class ViewController: UIViewController {
 
       tracker = PitchTap(mic) { p, a in
         DispatchQueue.main.async {
-          var pitch = p[0]
-          var amp = a[0]
-          let noteFrequencies = [
-            16.35, 17.32, 18.35, 19.45, 20.6, 21.83, 23.12, 24.5, 25.96, 27.5, 29.14, 30.87,
-          ]
-          let noteNamesWithSharps = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
-          let noteNamesWithFlats = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
+            var pitch = p[0]
+            var amp = a[0]
+            
+            // Check that the pitch is not simply background noise
+            guard amp > 0.12 else {return}
+            
+            // Calculate the MIDI musical number based on a reference pitch (A4 = 440 hz)
+            let midiDouble = 12 * log2(pitch / 440.0) + 69
+            let midiNum = Int(round(midiDouble))
+       
+            let noteNamesWithFlats = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
+            let noteName = noteNamesWithFlats[midiNum % 12]
+            let octave = (midiNum / 12) - 1
+       
+            // The closest pitch on a piano in hertz
+            let correctFreq = Float(pow(2.0, Double(midiNum - 69) / 12.0) * 440.0)
+       
+            // Calculate cents (deviation of played note from the key on a piano)
+            // Cents show slight variations between the played pitch and the closest pitch on the piano
+            let divide = pitch / correctFreq
+            let cents = Int(round(1200 * log2(divide)))
+            let centsStr = "\(cents)"
 
-          guard amp > 0.1 else { return }
 
-          var freq = pitch
+            self.pitchLabelStr = noteName
 
-          while freq > Float(noteFrequencies[noteFrequencies.count - 1]) {
-            freq = freq / 2.0
-          }
+            self.pitchLbl.text = noteName
 
-          while freq < Float(noteFrequencies[0]) {
-            freq = freq * 2.0
-          }
+            self.centsLbl.text = centsStr
+            self.centsLabelStr = centsStr
 
-          var minDistance: Float = 10000.0
-
-          var index = 0
-
-          for j in 0..<noteFrequencies.count {
-            let distance = fabsf(Float(noteFrequencies[j]) - freq)
-            if distance < minDistance {
-              index = j
-              minDistance = distance
-            }
-          }
-
-          var refNoteSameOct = noteFrequencies[index]
-          var lastNoteSameOct = noteFrequencies[noteFrequencies.count - 1]
-          var pitchPrecise = Double(pitch)
-
-          while pitchPrecise > lastNoteSameOct {
-            lastNoteSameOct = lastNoteSameOct * 2
-
-            refNoteSameOct = refNoteSameOct * 2
-          }
-
-          var cents = Int(round(1200 * log2(pitchPrecise / refNoteSameOct)))
-
-          var centsStr = ""
-          if cents < 0 {
-            centsStr = "\(cents)"
-          } else {
-            centsStr = "+\(cents)"
-          }
-
-          let octave = Int(log2f(pitch / freq))
-
-          var noteNameWithSharps = "\(noteNamesWithSharps[index])\(octave)"
-          var noteNameWithFlats = "\(noteNamesWithFlats[index])\(octave)"
-
-          self.pitchLabelStr = noteNameWithFlats
-
-          self.pitchLbl.text = noteNameWithFlats
-
-          self.centsLbl.text = centsStr
-          self.centsLabelStr = centsStr
-
-          // The needle stays within +/- 50 degrees
-          self.moveNeedleTo(degrees: Double(cents))
+            // The needle stays within +/- 50 degrees
+            self.moveNeedleTo(degrees: Double(cents))
         }
       }
 
