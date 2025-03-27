@@ -153,7 +153,7 @@ class ViewController: UIViewController {
             // Cents show slight variations between the played pitch and the closest pitch on the piano
             let divide = pitch / correctFreq
             let cents = Int(round(1200 * log2(divide)))
-            let centsStr = "\(cents)"
+            let centsStr = "\(cents) ¢"
 
 
             self.pitchLabelStr = noteName
