@@ -13,6 +13,7 @@ import AudioToolbox
 import CoreAudio
 import CoreAudioKit
 import SoundpipeAudioKit
+import UniformTypeIdentifiers
 import UIKit
 
 class ViewController: UIViewController {
@@ -132,9 +133,25 @@ class ViewController: UIViewController {
 
       tracker = PitchTap(mic) { p, a in
         DispatchQueue.main.async {
-            var pitch = p[0]
-            var amp = a[0]
-            
+            self.handlePitch(pitch: p[0], amp: a[0])
+        }
+      }
+
+      tracker.start()
+
+      do {
+          try engine.start()
+          print("Engine is started: ")
+          print(engine.avEngine.isRunning)
+      } catch {
+        print("Engine failed")
+      }
+
+    displayAudioFiles()
+  }
+    
+    
+    func handlePitch(pitch: Float, amp: Float){
             // Check that the pitch is not simply background noise
             guard amp > 0.12 else {return}
             
@@ -165,7 +182,7 @@ class ViewController: UIViewController {
             let octaveBb = (midiNumBb / 12) - 1
             
             
-            let centsStr = "\(cents)"
+            let centsStr = "\(cents)¢"
 
             self.pitchLabelStr = transposedNoteBb
 
@@ -176,31 +193,17 @@ class ViewController: UIViewController {
 
             // The needle stays within +/- 50 degrees
             self.moveNeedleTo(degrees: Double(cents))
-        }
-      }
-
-      tracker.start()
-
-      do {
-          try engine.start()
-          print("Engine is started: ")
-          print(engine.avEngine.isRunning)
-      } catch {
-        print("Engine failed")
-      }
-
-    displayAudioFiles()
-  }
+    }
 
 
-  @IBAction func playAudio() {
+  @IBAction func playPausePressed() {
       print("Engine is running before playback: ")
       print(engine.avEngine.isRunning)
       if (!engine.avEngine.isRunning){
           do{
               try engine.start()
           } catch {
-              print("Can't start engine in playAudio")
+              print("Can't start engine in playPausePressed")
           }
       }
       if avPlayer?.isPlaying != nil && avPlayer!.isPlaying {
@@ -218,32 +221,25 @@ class ViewController: UIViewController {
 
 
   func switchAudio(action: UIAction) {
-      print("Switching audio")
-    print(action.title)
     let alreadyPlaying = avPlayer?.isPlaying ?? false
-
-    avPlayer?.stop()
-
-    avPlayer = nil
-
+      
     let audioFileName = action.title + ".m4a"
-    let path = Bundle.main.path(forResource: audioFileName, ofType: nil)!
-    let url = URL(fileURLWithPath: path)
-
-    do {
-        avPlayer = try AudioPlayer()
-        try avPlayer?.load(url: url, buffered: true)
-        avPlayer?.isLooping = true
-        engine.stop()
-        engine.output = Mixer(Fader(mic, gain: 0), avPlayer!)
-        try engine.start()
-        
-      if alreadyPlaying {
-        avPlayer?.play()
+      if (alreadyPlaying){
+          playPausePressed()
       }
-    } catch {
-      print("Error setting audio player to new file: \(error)")
-    }
+      avPlayer?.stop()
+      let path = Bundle.main.path(forResource: audioFileName, ofType: nil)!
+      let url = URL(fileURLWithPath: path)
+      
+      do {
+          try avPlayer?.load(url: url)
+      } catch {
+          print("Error during audio file switch: \(error)")
+      }
+      
+      if alreadyPlaying {
+          playPausePressed()
+      }
 
   }
 
