@@ -141,24 +141,35 @@ class ViewController: UIViewController {
             // Calculate the MIDI musical number based on a reference pitch (A4 = 440 hz)
             let midiDouble = 12 * log2(pitch / 440.0) + 69
             let midiNum = Int(round(midiDouble))
+            
        
             let noteNamesWithFlats = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
-            let noteName = noteNamesWithFlats[midiNum % 12]
-            let octave = (midiNum / 12) - 1
-       
+            
+            
+            let noteNameConcertPitch = noteNamesWithFlats[midiNum % 12]
+            let octaveConcertPitch = (midiNum / 12) - 1
+            
             // The closest pitch on a piano in hertz
-            let correctFreq = Float(pow(2.0, Double(midiNum - 69) / 12.0) * 440.0)
-       
+            let concertPitchFreq = Float(pow(2.0, Double(midiNum - 69) / 12.0) * 440.0)
+            
             // Calculate cents (deviation of played note from the key on a piano)
             // Cents show slight variations between the played pitch and the closest pitch on the piano
-            let divide = pitch / correctFreq
-            let cents = Int(round(1200 * log2(divide)))
+            let divideConcertPitch = pitch / concertPitchFreq
+            let cents = Int(round(1200 * log2(divideConcertPitch)))
+            
+            
+            
+            // The transposed note on a Bb instrument
+            let midiNumBb = midiNum + 2
+            let transposedNoteBb = noteNamesWithFlats[midiNumBb % 12]
+            let octaveBb = (midiNumBb / 12) - 1
+            
+            
             let centsStr = "\(cents)"
 
+            self.pitchLabelStr = transposedNoteBb
 
-            self.pitchLabelStr = noteName
-
-            self.pitchLbl.text = noteName
+            self.pitchLbl.text = transposedNoteBb
 
             self.centsLbl.text = centsStr
             self.centsLabelStr = centsStr
