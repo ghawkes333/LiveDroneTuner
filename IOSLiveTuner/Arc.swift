@@ -1,6 +1,9 @@
 import UIKit
 
+@IBDesignable
 class Arc: UIView {
+    
+    
     override func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else { return }
 
