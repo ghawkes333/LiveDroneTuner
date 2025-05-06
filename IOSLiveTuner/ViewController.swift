@@ -64,6 +64,7 @@ class ViewController: UIViewController {
         
         silence = Fader(tappableNodeC, gain: 0)
         
+        
         super.init(coder: decoder)
         
     }
